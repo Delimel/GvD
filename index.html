@@ -84,6 +84,7 @@
   </head>
   <body>
     <canvas id="canvas" role="img" alt="DAO Teaser Animation" tabindex="0"></canvas>
+    <div id="text-overlay" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:clamp(2rem,6rem,6vw);color:#EDB333;font-style:italic;font-weight:700;opacity:0;z-index:5;pointer-events:none;">Coming Soon</div>
     <div class="thumbs">
       <div class="thumb-orb" id="up-orb" tabindex="0" aria-label="Vote up for GIV DAO">
         👍
@@ -109,7 +110,7 @@
       // Session check
       if (sessionStorage.getItem('viewed')) {
         // Skip animation, show static
-        document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-size:clamp(2rem,6rem,6vw);color:#EDB333;font-style:italic;font-weight:700;">Coming Soon</div>' + document.querySelector('.thumbs').outerHTML;
+        document.getElementById('text-overlay').style.opacity = '1';
         loadVotes();
         return;
       }
@@ -331,11 +332,11 @@
       // 5-10s: Morph reveal
       tl.set(metaballs.material.uniforms.time, { value: 0 }, 5)
         .to(metaballs.material.uniforms.time, { value: 5, duration: 5 }, 5)
-        .to(textMaterial.uniforms.opacity, { value: 1, duration: 2.5 }, 7.5);
+        .to('#text-overlay', { opacity: 1, duration: 2.5 }, 7.5);
 
       // 10-15s: Ebb
       tl.to(metaballs.scale, { x: 0, y: 0, z: 0, duration: 3 }, 10)
-        .to(textMaterial.uniforms.opacity, { value: 0, duration: 3 }, 10)
+        .to('#text-overlay', { opacity: 0, duration: 3 }, 10)
         .to(particles.material.uniforms.alpha, { value: 0, duration: 3 }, 10);
 
       // Mouse parallax
