@@ -98,10 +98,39 @@
       </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r169/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module">
+      import * as THREE from 'https://unpkg.com/three@0.169.0/build/three.module.js';
+      import { gsap } from 'https://unpkg.com/gsap@3.12.2/index.js';
+      import { createClient } from 'https://unpkg.com/@supabase/supabase-js@2/dist/module/index.js';
+
+      window.THREE = THREE;
+      window.gsap = gsap;
+      window.supabase = { createClient };
+    </script>
     <script>
+      try {
+        // Wait for modules to load
+        setTimeout(() => {
+          if (!window.THREE) throw new Error('THREE.js not loaded');
+          initAnimation();
+        }, 100);
+      } catch (error) {
+        console.error('Animation init failed:', error);
+        document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-size:clamp(2rem,6rem,6vw);color:#EDB333;font-style:italic;font-weight:700;">Coming Soon</div>' + document.querySelector('.thumbs').outerHTML;
+        // Load votes
+        const supabaseUrl = 'https://your-project.supabase.co';
+        const supabaseKey = 'your-anon-key';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        async function loadVotes() {
+          const { data } = await supabase.from('votes').select('type, count').eq('dao', 'gvd');
+          document.getElementById('up-count').textContent = data.find(d => d.type === 'up')?.count || 0;
+          document.getElementById('down-count').textContent = data.find(d => d.type === 'down')?.count || 0;
+        }
+        loadVotes();
+        return;
+      }
+
+      function initAnimation() {
       // Supabase setup (anon key needed)
       const supabaseUrl = 'https://your-project.supabase.co'; // Replace with actual
       const supabaseKey = 'your-anon-key'; // Replace with actual
@@ -391,6 +420,7 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         metaballMaterial.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
       });
+      }
     </script>
   </body>
 </html>
