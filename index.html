@@ -94,16 +94,16 @@
       z-index:3;
     }
     .thumb {
-      width:60px;
-      height:60px;
-      background:#EDB333;
+      width:30px;
+      height:30px;
       border-radius:50%;
-      box-shadow:0 0 15px #00A3FF;
+      border:2px solid #00A3FF;
+      box-shadow:0 0 10px #00A3FF;
       cursor:pointer;
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:2rem;
+      font-size:1rem;
       transition:transform 0.3s;
       position:relative;
     }
@@ -148,7 +148,7 @@
   <div class="particle"></div>
   <div class="container">
     <h1>Positive Impact Ignition Coming Soon</h1>
-    <button class="connect-btn" onclick="showNotification()">Connect TonKeeper</button>
+    <button class="connect-btn" onclick="connectTon()">Connect</button>
   </div>
   <div class="notification" id="notification">
     <p>Be Among The First To Be Notified When We Go Live & Open DAO Voting Seats.</p>
@@ -167,12 +167,13 @@
       <div class="count" id="down-count">0</div>
     </div>
   </div>
-  <div class="tonkeeper-stub" id="tonkeeper">TonKeeper Connect</div>
+  <div class="tonkeeper-stub" id="tonkeeper">Connect</div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
   <script>
     // Supabase setup
-    const supabaseUrl = 'https://your-project.supabase.co'; // Replace with actual
-    const supabaseKey = 'your-anon-key'; // Replace with actual
+    const supabaseUrl = 'https://hvtzulmwqnefmcnrzopa.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh2dHp1bG13cW5lZm1jbnJ6b3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU2MzIyMzgsImV4cCI6MjA2MTIwODIzOH0.iyvLXOlUWOAhWkBcX6weOVbumvNfIo6aionun9Us4Ys';
     const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
     // Session guard
@@ -185,7 +186,7 @@
     // Load votes
     async function loadVotes() {
       try {
-        const { data, error } = await supabase.from('votes').select('type, count').eq('dao', 'gvd');
+        const { data, error } = await supabase.from('dao_votes').select('type, count').eq('dao', 'gvd');
         if (error) throw error;
         document.getElementById('up-count').textContent = data.find(d => d.type === 'up')?.count || 0;
         document.getElementById('down-count').textContent = data.find(d => d.type === 'down')?.count || 0;
@@ -199,19 +200,34 @@
     async function vote(type) {
       if (sessionStorage.getItem('voted')) return;
       try {
-        const { error } = await supabase.rpc('increment_vote', { dao: 'gvd', type });
+        const { data, error } = await supabase.rpc('increment_dao_vote', { dao_name: 'gvd', vote_type: type });
         if (error) throw error;
         sessionStorage.setItem('voted', 'true');
         document.getElementById(type + '-thumb').classList.add('voted');
-        // Update count locally
-        const countEl = document.getElementById(type + '-count');
-        countEl.textContent = parseInt(countEl.textContent) + 1;
+        // Update count with returned value
+        document.getElementById(type + '-count').textContent = data;
       } catch (err) {
         console.error('Vote error:', err);
       }
     }
 
-    // TonKeeper functions
+    // Ton Connect setup
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+      manifestUrl: 'https://your-domain.com/tonconnect-manifest.json', // Replace with actual manifest
+      buttonRootId: 'ton-connect'
+    });
+
+    // Connect function
+    async function connectTon() {
+      try {
+        await tonConnectUI.openModal();
+      } catch (error) {
+        console.error('TonConnect error:', error);
+        alert('TonConnect not available. Please try again later.');
+      }
+    }
+
+    // Legacy notification functions (for fallback)
     function showNotification() {
       document.getElementById('notification').style.display = 'block';
       setTimeout(() => {
