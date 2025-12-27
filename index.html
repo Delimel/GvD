@@ -3,116 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GIV DAO - Coming Soon</title>
+  <title>GIV DAO - "Giving Is Virtuous" - Launching Soon</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
   <style>
-    body {
-      margin:0;
-      height:100vh;
-      background:#000;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-      font-family:'Playfair Display', serif;
-      position:relative;
-    }
-    .container {
-      text-align:center;
-      animation: reveal 12s forwards;
-      animation-delay:1s;
-      opacity:0;
-      position:relative;
-      z-index:2;
-    }
-    @keyframes reveal {
-      0% { opacity:0; transform:scale(0.8); }
-      20% { opacity:1; transform:scale(1); }
-      80% { opacity:1; transform:scale(1); }
-      100% { opacity:0; transform:scale(1.2); }
-    }
-    h1 {
-      font-size:clamp(3rem, 8vw, 6rem);
-      color:#EDB333;
-      text-shadow:0 0 20px #00A3FF;
-      margin:0;
-      font-style:italic;
-      font-weight:700;
-    }
-    .connect-btn {
-      margin-top:20px;
-      padding:10px 20px;
-      background:#EDB333;
-      color:#000;
-      border:none;
-      border-radius:5px;
-      font-size:1.2rem;
-      font-weight:700;
-      cursor:pointer;
-      opacity:1;
-    }
-    .notification {
-      position:fixed;
-      top:50%;
-      left:50%;
-      transform:translate(-50%,-50%);
-      background:#000;
-      color:#EDB333;
-      padding:20px;
-      border-radius:10px;
-      text-align:center;
-      display:none;
-      z-index:10;
-      box-shadow:0 0 20px #00A3FF;
-    }
-    .ton-options {
-      margin-top:10px;
-    }
-    .ton-btn {
-      margin:5px;
-      padding:10px;
-      background:#00A3FF;
-      color:#000;
-      border:none;
-      border-radius:5px;
-      cursor:pointer;
-    }
-    .thumbs {
-      position:absolute;
-      bottom:30px;
-      left:50%;
-      transform:translateX(-50%);
-      display:flex;
-      gap:20px;
-      z-index:3;
-    }
-    .thumb {
-      width:30px;
-      height:30px;
-      border-radius:50%;
-      border:2px solid #00A3FF;
-      box-shadow:0 0 10px #00A3FF;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:1rem;
-      transition:transform 0.3s;
-      position:relative;
-    }
-    .thumb:hover { transform:scale(1.2); }
-    .thumb.voted { opacity:0.5; cursor:not-allowed; }
-    .count {
-      position:absolute;
-      bottom:-25px;
-      left:50%;
-      transform:translateX(-50%);
-      font-family:monospace;
-      font-size:12px;
-      color:#F0F0F0;
-      text-shadow:1px 1px 2px #333;
-    }
-    /* Subtle particles */
+    body { margin:0; height:100vh; background:#000; display:flex; align-items:center; justify-content:center; overflow:hidden; font-family:'Playfair Display', serif; position:relative; }
+    .container { text-align:center; animation: reveal 12s forwards; animation-delay:1s; opacity:0; position:relative; z-index:2; }
+    @keyframes reveal { 0% { opacity:0; transform:scale(0.8); } 20% { opacity:1; transform:scale(1); } 80% { opacity:1; transform:scale(1); } 100% { opacity:0; transform:scale(1.2); } }
+    h1 { font-size:clamp(3rem, 8vw, 6rem); color:#EDB333; text-shadow:0 0 20px #00A3FF; margin:0; font-style:italic; font-weight:700; }
+    .header-img { width:80%; max-width:800px; clip-path:ellipse(50% 30% at 50% 50%); filter:drop-shadow(0 0 20px #00A3FF); margin-bottom:20px; }
+    .logo { position:absolute; top:20px; left:20px; width:100px; height:100px; border-radius:50%; box-shadow:0 0 15px #00A3FF; animation:float 3s ease-in-out infinite; }
+    @keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
+    .buttons { position:absolute; bottom:30px; left:50%; transform:translateX(-50%); display:flex; gap:20px; z-index:3; }
+    .btn { padding:10px 20px; border:2px solid #EDB333; border-radius:50px; background:none; color:#EDB333; font-weight:700; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s; text-decoration:none; }
+    .btn:hover { transform:scale(1.1); box-shadow:0 0 15px #00A3FF; }
+   /* Subtle particles */
     .particle {
       position:absolute;
       background:#fff;
@@ -129,126 +33,19 @@
       0%, 100% { opacity:0.1; transform:scale(1); }
       50% { opacity:0.4; transform:scale(1.5); }
     }
-    /* Easter egg stub */
-    .tonkeeper-stub { display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#EDB333; font-size:1.5rem; }
   </style>
 </head>
 <body>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
+  <div class="particle"></div> <!-- ...other particles -->
+  <img class="logo" src="https://pbs.twimg.com/profile_images/1995619845715509249/_59OH28W.jpg" alt="GIV DAO Logo">
   <div class="container">
-    <h1>Positive Impact Ignition Coming Soon</h1>
-    <div style="display: flex; gap: 10px; justify-content: center;">
-      <button class="connect-btn" onclick="connectTon()">Connect</button>
-      <button class="connect-btn" onclick="showNotification()">Contact</button>
-    </div>
+    <img class="header-img" src="https://pbs.twimg.com/profile_banners/922202769544695811/1764678986/1500x500" alt="GIV DAO Header">
+    <h1>Positive Impact Launching Soon</h1>
   </div>
-  <div class="notification" id="notification">
-    <p>Be Among The First To Be Notified When We Go Live & Open DAO Voting Seats.</p>
-    <div class="ton-options">
-      <button class="ton-btn" onclick="payWithTon('ton')">Pay $1 TON</button>
-      <button class="ton-btn" onclick="payWithTon('usdt')">Pay $1 USDT</button>
-    </div>
+  <div class="buttons">
+    <a class="btn" href="https://x.com/givdao" target="_blank">Follow Us</a>
+    <a class="btn" href="https://x.com/givdao" target="_blank">Contact Us</a>
   </div>
-  <div class="thumbs">
-    <div class="thumb" id="up-thumb" onclick="vote('up')" aria-label="Vote up for GIV DAO">
-      👍
-      <div class="count" id="up-count">0</div>
-    </div>
-    <div class="thumb" id="down-thumb" onclick="vote('down')" aria-label="Vote down for GIV DAO">
-      👎
-      <div class="count" id="down-count">0</div>
-    </div>
-  </div>
-  <div class="tonkeeper-stub" id="tonkeeper">Connect</div>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
-  <script>
-    // Supabase setup
-    const supabaseUrl = 'https://hvtzulmwqnefmcnrzopa.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh2dHp1bG13cW5lZm1jbnJ6b3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU2MzIyMzgsImV4cCI6MjA2MTIwODIzOH0.iyvLXOlUWOAhWkBcX6weOVbumvNfIo6aionun9Us4Ys';
-    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
-    // Session guard
-    if (sessionStorage.getItem('viewed')) {
-      document.querySelector('.container').style.display = 'none';
-    } else {
-      sessionStorage.setItem('viewed', 'true');
-    }
-
-    // Load votes
-    async function loadVotes() {
-      try {
-        const { data, error } = await supabase.from('dao_votes').select('type, count').eq('dao', 'gvd');
-        if (error) throw error;
-        document.getElementById('up-count').textContent = data.find(d => d.type === 'up')?.count || 0;
-        document.getElementById('down-count').textContent = data.find(d => d.type === 'down')?.count || 0;
-      } catch (err) {
-        console.error('Load votes error:', err);
-      }
-    }
-    loadVotes();
-
-    // Vote function
-    async function vote(type) {
-      if (sessionStorage.getItem('voted')) return;
-      try {
-        const { data, error } = await supabase.rpc('increment_dao_vote', { dao_name: 'gvd', vote_type: type });
-        if (error) throw error;
-        sessionStorage.setItem('voted', 'true');
-        document.getElementById(type + '-thumb').classList.add('voted');
-        // Update count with returned value
-        document.getElementById(type + '-count').textContent = data;
-      } catch (err) {
-        console.error('Vote error:', err);
-      }
-    }
-
-    // Ton Connect setup
-    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-      manifestUrl: 'https://givdao.org/tonconnect-manifest.json',
-      buttonRootId: 'ton-connect'
-    });
-
-    // Connect function
-    async function connectTon() {
-      try {
-        await tonConnectUI.openModal();
-      } catch (error) {
-        console.error('TonConnect error:', error);
-        alert('TonConnect not available. Please try again later.');
-      }
-    }
-
-    // Legacy notification functions (for fallback)
-    function showNotification() {
-      document.getElementById('notification').style.display = 'block';
-      setTimeout(() => {
-        document.getElementById('notification').style.display = 'none';
-      }, 5000); // Hide after 5s
-    }
-
-    async function payWithTon(currency) {
-      // TON7 integration for GvD using Square API
-      try {
-        const response = await fetch('/api/payments/square/create-payment', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ amount: 1, paymentMethod: 'ton' })
-        });
-        const data = await response.json();
-        if (response.ok) {
-          alert(`Payment successful! Payment ID: ${data.paymentId}`);
-        } else {
-          alert(`Payment failed: ${data.error}`);
-        }
-      } catch (error) {
-        alert('Payment error: ' + error.message);
-      }
-    }
-  </script>
+  <!-- Supabase/JS from prior if needed -->
 </body>
 </html>
